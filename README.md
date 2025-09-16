@@ -26,25 +26,34 @@ Este repositório demonstra uma implementação simples de autenticação com **
 
 ## 🚀 Como usar
 
-1. **Gerar chaves:**
-   ```bash
-   mkdir keys
-   openssl genrsa -out keys/private.pem 2048
-   openssl rsa -in keys/private.pem -pubout -out keys/public.pem
+### 1. Criar banco de dados PostgreSQL
+    No terminal `psql` ou via pgAdmin:
 
-2. **Instalar dependências:**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # Linux/Mac
-   # .venv\Scripts\activate   # Windows (PowerShell)
-   pip install -r requirements.txt
+    ```sql
+    CREATE DATABASE login_db;
 
-3. **Rodar servidor:**
-   ```bash
-   uvicorn main:app --reload
+### 2. Configurar variáveis de ambiente
+    $env:DB_USER="postgres"
+    $env:DB_PASS="SUA_SENHA_DO_POSTGRES"
+    $env:DB_NAME="login_db"
+    $env:DB_HOST="localhost"
+    $env:DB_PORT="5432"
 
-4. **Acessar o frontend:**
-   Abra no navegador: http://127.0.0.1:8000/static/index.html
+
+### 3. Configurar variáveis de ambiente
+    mkdir keys
+    openssl genrsa -out keys/private.pem 2048
+    openssl rsa -in keys/private.pem -pubout -out keys/public.pem
+
+### 4. Instalar dependências
+    source .venv/bin/activate
+    pip install -r requirements.txt
+
+### 5. Rodar servidor FastAPI
+    uvicorn main:app --reload --host 127.0.0.1 --port 8000
+
+### 6. Acessar o frontend
+    Abra no navegador: http://127.0.0.1:8000/static/index.html
 
 ## 📡 Endpoints da API
 http://127.0.0.1:8000/docs#/default/public_key_public_key_get

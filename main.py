@@ -8,8 +8,11 @@ from fastapi.responses import PlainTextResponse, RedirectResponse
 from pydantic import BaseModel
 from jose import jwt
 from passlib.context import CryptContext
-from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base, Session
+from sqlalchemy.orm import Session
+
+# --- IMPORTS DO PROJETO ---
+from database import SessionLocal, Base, engine
+from models import User  # novo arquivo models.py
 
 # --- CONFIG ---
 BASE_DIR = os.path.dirname(__file__)
@@ -27,21 +30,10 @@ with open(PUBLIC_KEY_PATH, "rb") as f:
 # --- PASSWORD HASH ---
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# --- DATABASE (sqlite simple) ---
-DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}"
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
-Base = declarative_base()
-
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True, nullable=False)
-    email = Column(String, unique=True, index=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
-
+# --- CRIA TABELAS ---
 Base.metadata.create_all(bind=engine)
 
+# --- SESSION DEPENDENCY ---
 def get_db() -> Generator:
     db = SessionLocal()
     try:
@@ -49,7 +41,7 @@ def get_db() -> Generator:
     finally:
         db.close()
 
-# --- Pydantic schemas ---
+# --- Pydantic Schemas ---
 class RegisterSchema(BaseModel):
     username: str
     email: str
@@ -65,7 +57,6 @@ app = FastAPI(title="Exemplo Login FastAPI (RS256 JWT)")
 # serve frontend estático
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
-# rota raiz redireciona para frontend
 @app.get("/")
 def root():
     return RedirectResponse(url="/static/index.html")
