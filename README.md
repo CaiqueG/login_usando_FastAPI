@@ -1,31 +1,72 @@
-# Exemplo: Login com FastAPI + JWT (RS256)
- **Caique Maia - NUSP: 1255572** 
+# 🔑 Exemplo: Login com FastAPI + JWT (RS256)
 
-## O que tem aqui
-- Backend em FastAPI que cadastra usuário (SQLite) e gera JWT assinado com **RS256** (private key).
-- Frontend estático (HTML + JS) que pede token ao backend, verifica assinatura com a public key e guarda token em cookie.
-- Token expira em **15 minutos**.
+**Autor:** Caique Maia — **NUSP:** 1255572  
 
-## Como usar
-1. Gere chaves:
+Este repositório demonstra uma implementação simples de autenticação com **FastAPI** usando **JWT assinado com RS256**, incluindo backend e um frontend estático para testes.
+
+---
+
+## 📌 Funcionalidades
+
+- ✅ **Cadastro de usuário** (armazenado em SQLite)
+- ✅ **Login** que gera um JWT com expiração de **15 minutos**
+- ✅ **Assinatura RS256** com chave privada (no backend)
+- ✅ **Verificação da assinatura** no frontend usando chave pública
+- ✅ **Armazenamento seguro** do token em cookie
+
+---
+
+## 🛠️ Pré-requisitos
+
+- Python 3.10+
+- OpenSSL (para gerar as chaves)
+- Navegador para acessar o frontend
+
+---
+
+## 🚀 Como usar
+
+1. **Gerar chaves:**
    ```bash
    mkdir keys
    openssl genrsa -out keys/private.pem 2048
    openssl rsa -in keys/private.pem -pubout -out keys/public.pem
 
-2. Gere chaves:
-    python -m venv .venv
-    source .venv/bin/activate
-    pip install -r requirements.txt
+2. **Instalar dependências:**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # Linux/Mac
+   # .venv\Scripts\activate   # Windows (PowerShell)
+   pip install -r requirements.txt
 
-3. Rode:
-    uvicorn main:app --reload
+3. **Rodar servidor:**
+   ```bash
+   uvicorn main:app --reload
 
-4. Abra a página gerada: 
-    http://127.0.0.1:8000/static/index.html
+4. **Acessar o frontend:**
+   Abra no navegador: http://127.0.0.1:8000/static/index.html
+
+## 📡 Endpoints da API
+http://127.0.0.1:8000/docs#/default/public_key_public_key_get
+
+    ### POST /register (exemplo)
+        {
+        "username": "string",
+        "email": "string",
+        "password": "string"
+        }
+
+    ### POST /login (exemplo)
+        {
+        "username": "string",
+        "password": "string"
+        }
+
+    ### GET /public_key (exemplo)
+        Retorna a chave pública em formato PEM usada para verificar a assinatura do token.
+        -----BEGIN PUBLIC KEY-----
+        MIIBIjANBgkqh...
+        -----END PUBLIC KEY-----
 
 
-## Endpoints importantes
-POST /register — JSON: { "username", "email", "password" } → retorna 201
-POST /login — JSON: { "username", "password" } → retorna { access_token } e cookie
-GET /public_key — retorna chave pública (PEM) usada para verificar token
+   
