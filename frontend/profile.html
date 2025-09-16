@@ -1,15 +1,20 @@
-<!-- frontend/profile.html -->
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <title>Perfil - Exemplo Login</title>
+  <meta charset="utf-8">
+  <title>Perfil</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Perfil</h1>
-  <div id="content">Carregando...</div>
+  <div class="card">
+    <h1>Perfil</h1>
+    <div id="content">Carregando...</div>
+    <button id="logout" style="margin-top: 1rem;">Sair</button>
+  </div>
+
   <script type="module">
     import * as jose from 'https://cdn.jsdelivr.net/npm/jose@4/dist/browser/index.min.js';
+
     function getCookie(name) {
       const cookies = document.cookie.split(';').map(c=>c.trim());
       for (const c of cookies) {
@@ -17,6 +22,7 @@
       }
       return null;
     }
+
     async function run() {
       const token = getCookie('token');
       if (!token) { location.href = '/static/index.html'; return; }
@@ -29,19 +35,20 @@
           <p><strong>Usuário:</strong> ${payload.sub}</p>
           <p><strong>Email:</strong> ${payload.email}</p>
           <p><strong>ID:</strong> ${payload.user_id}</p>
-          <p><strong>Expira (epoch):</strong> ${payload.exp}</p>
-          <button id="logout">Sair</button>
+          <p><strong>Expira:</strong> ${new Date(payload.exp*1000).toLocaleString()}</p>
         `;
-        document.getElementById('logout').addEventListener('click', ()=>{
-          document.cookie = 'token=; max-age=0; path=/';
-          location.href = '/static/index.html';
-        });
       } catch(err) {
         console.error(err);
-        alert('Token inválido/expirado. Voltando ao login.');
+        alert('Token inválido ou expirado. Voltando ao login.');
         location.href = '/static/index.html';
       }
     }
+
+    document.getElementById('logout').addEventListener('click', ()=>{
+      document.cookie = 'token=; max-age=0; path=/';
+      location.href = '/static/index.html';
+    });
+
     run();
   </script>
 </body>

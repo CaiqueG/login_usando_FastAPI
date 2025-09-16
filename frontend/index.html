@@ -2,48 +2,90 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Login FastAPI</title>
+  <title>Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      width: 350px;
+      text-align: center;
+    }
+    h1 {
+      color: #9b4de0;
+      margin-bottom: .5rem;
+    }
+    p.subtitle {
+      color: #666;
+      font-size: .9rem;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin: .5rem 0 .25rem;
+      font-weight: 600;
+    }
+    input {
+      width: 100%;
+      padding: .75rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: .9rem;
+    }
+    button {
+      width: 100%;
+      padding: .9rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #9b4de0, #6a11cb);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    .link {
+      margin-top: 1rem;
+      font-size: .9rem;
+    }
+    .link a {
+      color: #6a11cb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <h1>Login</h1>
-  <form id="loginForm">
-    <input type="text" placeholder="Usuário" name="username" required>
-    <input type="password" placeholder="Senha" name="password" required>
-    <button type="submit">Login</button>
-  </form>
+  <div class="card">
+    <h1>Login</h1>
+    <p class="subtitle">Entre com suas credenciais para acessar sua conta</p>
+    <form id="loginForm">
+      <label>Usuário</label>
+      <input type="text" id="login-username" placeholder="Digite seu usuário" required>
+      <label>Senha</label>
+      <input type="password" id="login-password" placeholder="Digite sua senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <div class="link">
+      Ainda não tem conta? <a href="register.html">Cadastre-se aqui</a>
+    </div>
+  </div>
 
-  <p>Ainda não tem conta? <a href="register.html">Cadastre-se aqui</a></p>
-
-  <pre id="output"></pre>
-
-  <script>
-    const output = document.getElementById("output");
-
-    async function login(event) {
-      event.preventDefault();
-      const form = event.target;
-      const payload = {
-        username: form.username.value,
-        password: form.password.value
-      };
-      const res = await fetch("/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      output.textContent = JSON.stringify(data, null, 2);
-
-      if (data.access_token) {
-        document.cookie = `access_token=${data.access_token}; path=/; max-age=900`; // expira em 15 min
-        alert("Login realizado com sucesso!");
-        window.location.href = "profile.html"; // redireciona para o perfil
-      } else {
-        alert("Usuário ou senha inválidos!");
-      }
-    }
-
-    document.getElementById("loginForm").addEventListener("submit", login);
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
