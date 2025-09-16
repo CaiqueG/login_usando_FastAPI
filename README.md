@@ -1,4 +1,4 @@
-# 🔑 Exemplo: Login com FastAPI + JWT (RS256)
+# Exemplo: Login com FastAPI + JWT (RS256)
 
 **Autor:** Caique Maia — **NUSP:** 1255572  
 
@@ -6,17 +6,17 @@ Este repositório demonstra uma implementação simples de autenticação com **
 
 ---
 
-## 📌 Funcionalidades
+## Funcionalidades
 
-- ✅ **Cadastro de usuário** (armazenado em SQLite)
-- ✅ **Login** que gera um JWT com expiração de **15 minutos**
-- ✅ **Assinatura RS256** com chave privada (no backend)
-- ✅ **Verificação da assinatura** no frontend usando chave pública
-- ✅ **Armazenamento seguro** do token em cookie
+- **Cadastro de usuário** (armazenado em SQLite)
+- **Login** que gera um JWT com expiração de **15 minutos**
+- **Assinatura RS256** com chave privada (no backend)
+- **Verificação da assinatura** no frontend usando chave pública
+- **Armazenamento seguro** do token em cookie
 
 ---
 
-## 🛠️ Pré-requisitos
+## Pré-requisitos
 
 - Python 3.10+
 - OpenSSL (para gerar as chaves)
@@ -24,7 +24,7 @@ Este repositório demonstra uma implementação simples de autenticação com **
 
 ---
 
-## 🚀 Como usar
+## Como usar
 
 ### 1. Criar banco de dados PostgreSQL
     No terminal `psql` ou via pgAdmin:
@@ -55,7 +55,7 @@ Este repositório demonstra uma implementação simples de autenticação com **
 ### 6. Acessar o frontend
     Abra no navegador: http://127.0.0.1:8000/static/index.html
 
-## 📡 Endpoints da API
+## Endpoints da API
 http://127.0.0.1:8000/docs#/default/public_key_public_key_get
 
     ### POST /register (exemplo)
@@ -76,3 +76,4 @@ http://127.0.0.1:8000/docs#/default/public_key_public_key_get
         -----BEGIN PUBLIC KEY-----
         MIIBIjANBgkqh...
         -----END PUBLIC KEY-----
+
