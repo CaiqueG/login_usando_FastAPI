@@ -69,4 +69,11 @@ http://127.0.0.1:8000/docs#/default/public_key_public_key_get
         -----END PUBLIC KEY-----
 
 
+<<<<<<< HEAD
    
+=======
+## Endpoints importantes
+   POST /register — JSON: { "username", "email", "password" } → retorna 201
+   POST /login — JSON: { "username", "password" } → retorna { access_token } e cookie
+   GET /public_key — retorna chave pública (PEM) usada para verificar token
+>>>>>>> 17679515101a210d82d45c073ad1f3f1737b2e01
