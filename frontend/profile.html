@@ -1,0 +1,48 @@
+<!-- frontend/profile.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Perfil - Exemplo Login</title>
+</head>
+<body>
+  <h1>Perfil</h1>
+  <div id="content">Carregando...</div>
+  <script type="module">
+    import * as jose from 'https://cdn.jsdelivr.net/npm/jose@4/dist/browser/index.min.js';
+    function getCookie(name) {
+      const cookies = document.cookie.split(';').map(c=>c.trim());
+      for (const c of cookies) {
+        if (c.startsWith(name+'=')) return c.substring((name+'=').length);
+      }
+      return null;
+    }
+    async function run() {
+      const token = getCookie('token');
+      if (!token) { location.href = '/static/index.html'; return; }
+      try {
+        const r = await fetch('/public_key');
+        const pubPEM = await r.text();
+        const pubKey = await jose.importSPKI(pubPEM, 'RS256');
+        const { payload } = await jose.jwtVerify(token, pubKey);
+        document.getElementById('content').innerHTML = `
+          <p><strong>Usuário:</strong> ${payload.sub}</p>
+          <p><strong>Email:</strong> ${payload.email}</p>
+          <p><strong>ID:</strong> ${payload.user_id}</p>
+          <p><strong>Expira (epoch):</strong> ${payload.exp}</p>
+          <button id="logout">Sair</button>
+        `;
+        document.getElementById('logout').addEventListener('click', ()=>{
+          document.cookie = 'token=; max-age=0; path=/';
+          location.href = '/static/index.html';
+        });
+      } catch(err) {
+        console.error(err);
+        alert('Token inválido/expirado. Voltando ao login.');
+        location.href = '/static/index.html';
+      }
+    }
+    run();
+  </script>
+</body>
+</html>
