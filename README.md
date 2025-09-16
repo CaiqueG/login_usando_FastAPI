@@ -26,6 +26,6 @@
 
 
 ## Endpoints importantes
-POST /register — JSON: { "username", "email", "password" } → retorna 201
-POST /login — JSON: { "username", "password" } → retorna { access_token } e cookie
-GET /public_key — retorna chave pública (PEM) usada para verificar token
+   POST /register — JSON: { "username", "email", "password" } → retorna 201
+   POST /login — JSON: { "username", "password" } → retorna { access_token } e cookie
+   GET /public_key — retorna chave pública (PEM) usada para verificar token
