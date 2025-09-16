@@ -1,3 +1,18 @@
+.logos {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;          /* espaço entre as logos */
+  margin-bottom: 1rem; /* distância para o título */
+  padding-top: 0.5rem; /* garante espaço no topo */
+}
+
+.logos img {
+  max-width: 100px;  /* limita o tamanho sem cortar */
+  height: auto;
+  display: block;
+}
+
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background: #f9f9fb;
@@ -7,29 +22,43 @@ body {
   height: 100vh;
   margin: 0;
 }
+
 .card {
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   width: 350px;
+  max-width: 90%;
   text-align: center;
+  box-sizing: border-box;
 }
+
+
+.card img {
+  max-width: 80%;      /* limita o tamanho da imagem */
+  height: auto;        /* mantém proporção */
+  margin: 0.5rem 0;    /* espaçamento acima/abaixo */
+}
+
 h1 {
   color: #9b4de0;
   margin-bottom: .5rem;
 }
+
 p.subtitle {
   color: #666;
   font-size: .9rem;
   margin-bottom: 1.5rem;
 }
+
 label {
   display: block;
   text-align: left;
   margin: .5rem 0 .25rem;
   font-weight: 600;
 }
+
 input {
   width: 100%;
   padding: .75rem;
@@ -37,7 +66,9 @@ input {
   border-radius: 8px;
   margin-bottom: 1rem;
   font-size: .9rem;
+  box-sizing: border-box;
 }
+
 button {
   width: 100%;
   padding: .9rem;
@@ -50,13 +81,16 @@ button {
   cursor: pointer;
   transition: 0.3s;
 }
+
 button:hover {
   opacity: 0.9;
 }
+
 .link {
   margin-top: 1rem;
   font-size: .9rem;
 }
+
 .link a {
   color: #6a11cb;
   text-decoration: none;
